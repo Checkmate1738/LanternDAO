@@ -1,4 +1,4 @@
-# Lantern DAO Documentation
+# Lantern DAO
 
 ## Overview
 
