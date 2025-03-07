@@ -1,34 +1,57 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-
-function App() {
-  const [count, setCount] = useState(0);
-
+/*function App() {
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Hello world</h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
+
+export default App;
+*/
+
+import React from "react";
+import Web3 from "web3";
+import { Transak } from "@transak/transak-sdk";
+
+const App = () => {
+  const initTransak = () => {
+    const transak = new Transak({
+      apiKey: "YOUR_API_KEY", // Replace with your Transak API Key
+      environment: "STAGING", // Use 'PRODUCTION' in production
+      walletAddress: "0xYourWalletAddress", // Wallet address where funds will be sent
+      fiatCurrency: "USD", // Fiat currency to use (optional)
+      cryptoCurrencyList: "ETH,USDT", // Cryptos supported (optional)
+      networks: "ethereum", // Networks supported (e.g., 'ethereum,polygon')
+      defaultNetwork: "ethereum", // Default network
+    });
+
+    transak.init();
+
+    // Listen to Transak events
+    transak.on("TRANSAK_ORDER_SUCCESSFUL", (orderData) => {
+      console.log("Order successful:", orderData);
+      transak.close(); // Close the widget
+    });
+
+    transak.on("TRANSAK_ORDER_FAILED", (orderData) => {
+      console.log("Order failed:", orderData);
+      transak.close();
+    });
+
+    // Handle widget close
+    transak.on("TRANSAK_WIDGET_CLOSE", () => {
+      console.log("Widget closed");
+    });
+  };
+
+  return (
+    <div>
+      <h1>Integrate Transak with Web3.js</h1>
+      <button onClick={initTransak}>Buy Crypto</button>
+    </div>
+  );
+};
 
 export default App;
