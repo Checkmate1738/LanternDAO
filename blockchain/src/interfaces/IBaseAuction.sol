@@ -2,6 +2,14 @@
 pragma solidity ^0.8.0;
 
 interface IBaseAuction {
+
+    enum State {
+        Created,
+        Active,
+        Ended,
+        Canceled
+    }
+
     struct Bid {
         address _who;
         uint256 _nftId;
@@ -13,6 +21,7 @@ interface IBaseAuction {
         uint256 _initialValue;
         uint256 _startingBid;
         string _descrption;
+        State _status;
     }
 
     struct Auction {
