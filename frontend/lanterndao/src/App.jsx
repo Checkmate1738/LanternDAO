@@ -24,7 +24,7 @@ function App() {
   return (
     <>
       <defaultTheme.Provider value={{ navBG,titleName, titleBG, primaryBg,primaryFontSize, secondaryFontSize,titleFW,textColor }}>
-        <Box>
+        <Box >
           <Index />
         </Box>
       </defaultTheme.Provider>
